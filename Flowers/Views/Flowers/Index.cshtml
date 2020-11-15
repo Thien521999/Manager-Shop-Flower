@@ -1,0 +1,289 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/FlowersLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+@section Column1{
+    <div class="Content_Column1">
+
+    </div>
+    <!--<div id="column1">
+        <h2>Maecenas luctus</h2>
+        <p><img src="~/Assets/images/img06.jpg" width="300" height="150" alt="" /></p>
+        <p>Etiam non felis. Donec ut ante. In id eros. Suspendisse lacus turpis, cursus egestas at sem. Mauris quam enim, molestie.</p>
+        <p class="button"><a href="#">Read More</a></p>
+    </div>-->
+}
+
+@section Column2{
+    <div class="Content_Column2">
+    </div>
+    <!--<div id="column2">
+        <h2>Fusce fringilla</h2>
+        <p><img src="~/Assets/images/img07.jpg" width="300" height="150" alt="" /></p>
+        <p>Etiam non felis. Donec ut ante. In id eros. Suspendisse lacus turpis, cursus egestas at sem. Mauris quam enim, molestie.</p>
+        <p class="button"><a href="#">Read More</a></p>
+    </div>-->
+}
+
+@section Column3{
+    <div class="Content_Column3">
+
+    </div>
+    <!--<div id="column3">
+        <h2>Praesent mattis</h2>
+        <p><img src="~/Assets/images/img08.jpg" width="300" height="150" alt="" /></p>
+        <p>Etiam non felis. Donec ut ante. In id eros. Suspendisse lacus turpis, cursus egestas at sem. Mauris quam enim, molestie.</p>
+        <p class="button"><a href="#">Read More</a></p>
+    </div>-->
+}
+
+@*modal dùng để hiển thị form Create*@
+<!-- Modal -->
+@section MODEL_DIALOG {
+    <div class="modal fade" id="CreateEditModal" role="dialog">
+        <div class="modal-dialog btn-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><label id="title">No Title</label></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <input type="hidden" class="form-control" id="Id" />
+                                <label>Flowers Names</label>
+                                <input type="text" id="FlowersName" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @using (Html.BeginForm("Index", "Flowers", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "UploadForm" }))
+                                {
+                                    <label>Image Path</label>
+                                    <input type="file" name="file" class="form-control-file" id="ImagePath" />
+                                    <input type="submit" id="btnsubmit" class="hidden" />
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <label>Type</label>
+                                <select class="form-control" id="TypeColumn">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-10">                               
+                                <label>Content</label>
+                                <input type="text" id="Content" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnClose" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnSave" class="btn btn-primary" data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Script{
+    <script type="text/javascript">
+        var isUpdatable = false;
+        var currentUpdatePath = "";//để lưu lại đường dẫn file hiện có của Flowers cần chỉnh sửa
+        var currentId = 0;//để chứa thông tin Id của Flowers cần chỉnh sửa 
+
+        $(document).ready(function () {
+            showFlowersShop();
+
+            $("#btnCreateNew").click(function (e) {
+                //Khai báo biến isUpdatable mặc nhiên là false (nghĩa là tạo mới) còn true 
+                //nghĩa là chỉnh sửa 
+                isUpdatable = false;
+                $("#title").text("Create New");               
+            });
+
+            //Khi nhấn nút Close ta sẽ xóa hết nội dung có trong Modal để cho dùng lần tiếp theo.
+            $("#btnClose").click(function (e) {
+                clearModalContent();
+            });
+
+            $("#btnSave").click(function (e) {
+                //Tạo data gồm tất cả thông tin cần thiết của một flower là Id, FlowersName, ImagePath và TagContent ,ColumnType
+                var data = {
+                    Id: $("#Id").val(),
+                    FlowersName: $.trim($("#FlowersName").val()),
+                    ImagePath: $("#ImagePath").val(),
+                    TagContent: $("#Content").val(),
+                    TypeColumn: $("#TypeColumn").val()                
+                }
+
+                //Nếu ImagePath và FlowersName không có thì ta không làm gì cả
+                if (!isUpdatable) {
+                    if (!data.ImagePath || !data.FlowersName) {
+                        alert("You should input FlowersName and choose flowers");
+                        return;
+                    }
+                }
+                else {
+                    if (!data.ImagePath) {
+                        data.ImagePath = currentUpdatePath;                      
+                    }                       
+                    data.Id = currentId;
+
+                }
+
+                //“$("#UploadForm").submit();” là để post nội dung form UploadForm để chuyển File Ảnh chọn cho 
+                //server thông qua action Flowers\Index.Tại Action Index này ta sẽ thực hiện sao chép file chuyển 
+                //cho server này để lưu vào thư mục Assets\images
+                alert(data.ImagePath);
+                $("#UploadForm").submit();
+
+                if (!isUpdatable) {
+                    $.ajax({
+                        url: '/Flowers/Create/',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (data) {
+                            showFlowersShop();
+                            clearModalContent();
+                        },
+                        error: function (err) {
+                            alert("Error:" + err.responseText);
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        url: '/Flowers/Update/',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (data) {
+                            showFlowersShop();
+                            clearModalContent();
+                        },
+                        error: function (err) {
+                            alert("Error:" + err.responseText);
+                        }
+                    });
+                }
+            });
+            function clearModalContent() {
+                $("#FlowersName").val(""),
+                $("#ImagePath").val(""),
+                $("#TagContent").val(""),
+                $("#TypeColumn").val("1")
+                isUpdatable = false;
+            }
+        });
+
+        function showFlowersShop() {
+            $(".Content_Column1").empty();
+            $(".Content_Column2").empty();
+            $(".Content_Column3").empty();
+
+            $.ajax({
+                url: '/Flowers/ListFlowers/',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $.each(data, function (i, item) {
+                        var id = item.Id;
+                        var flowersname = item.FlowersName;
+                        var flowerspath = item.ImagePath;
+                        var tagcontent = item.TagContent;
+                        var typecolumn = item.TypeColumn;
+                        var classname = "";
+
+                        if (item.TypeColumn == 1) {
+                            classname = ".Content_Column1";
+                        }
+                        if (item.TypeColumn == 2) {
+                            classname = ".Content_Column2";
+                        }
+                        if (item.TypeColumn == 3) {
+                            classname = ".Content_Column3";
+                        }
+                        AppendNewFlowers(id, classname, flowersname, flowerspath, tagcontent, typecolumn);
+                    });
+                },
+                error: function (err) {
+                    alert("Error:" + err.responseText);
+                }
+            });
+
+            //hàm để chèn dữ liệu vào các thẻ div latest_flowers, top_rated, và most_commented
+            //tương ứng tùy vào item.type
+            function AppendNewFlowers(id, classname, flowersname, flowerspath, tagcontent, typecolumn) {
+                var rows = ' ';
+                rows += "<div id='column" + typecolumn + "'>";
+                rows += "<h2>" + flowersname + "</h2>";
+                rows += "<p><img src=\"/Assets/" + flowerspath + "\" width='300' height = '150' alt = 'flowers' /></p > ";
+                rows += "<p>" + tagcontent + "</p>";
+                rows += "<p class='button'><a href='#'>Read More</a></p>";
+                rows += "<button type = 'button' id = 'btnEdit' class = 'btn btn-primary btn-xs' data-toggle ='modal' data-target='#CreateEditModal' onclick='return getDetailFlower(" + id + ")'> Edit </button>";
+                rows += "<button type = 'button' id = 'btnDelete' class = 'btn btn-danger btn-xs' onclick='return deleteFlower(" + id + ")'> Delete </button>";
+                rows += "</div>";
+                $(classname).append(rows);
+            }
+        }
+
+        //gửi một ajax yêu cầu Server thực thi Action là /Cinema/Delete 
+        function deleteFlower(id) {
+            var confirmDelete = confirm("Do you want to delete flowers ?");
+            if (confirmDelete == true) {
+                $.ajax({
+                    url: '/Flowers/Delete/' + id,
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (data) {
+                        showFlowersShop();
+                    },
+                    error: function (err) {
+                        alert("Error:" + err.responseText);
+                    }
+                });
+            }    
+        }
+
+        function getDetailFlower(id) {
+            isUpdatable = true;
+            currentUpdatePath = "";
+            currentId = 0;
+            $("#title").text("Edit");
+
+            $.ajax({
+                url: '/Flowers/Get/' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $("#FlowersName").val(data.FlowersName);
+                    $("#TagContent").val(data.TagContent);
+                    $("#FlowersType").val(data.TypeColumn.trim());
+                    currentUpdatePath = data.ImagePath;
+                    currentId = data.Id;
+                },
+                error: function (err) {
+                    alert("Error:" + err.responseText);
+                }
+            });
+        }
+    </script>
+}
+
+
+
+

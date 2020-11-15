@@ -1,0 +1,158 @@
+﻿
+@{
+    ViewBag.Title = "FlowersLayout";
+}
+
+@*<h2>FlowersLayout</h2>*@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>ColoreGiallo by TEMPLATED</title>
+
+    <script type="text/javascript" src="~/Assets/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="~/Assets/js/jquery-func.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    @*<link href='http://fonts.googleapis.com/css?family=Oswald:400,300' rel='stylesheet' type='text/css' />
+      <link href='http://fonts.googleapis.com/css?family=Abel|Satisfy' rel='stylesheet' type='text/css' />*@
+    <link href="~/Assets/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+
+    @RenderSection("script", required: false)
+</head>
+<body>
+<div id="wrapper">
+	<div id="header-wrapper">
+		<div id="header" class="container">
+			<div id="logo">
+				<h2><a href="#">Colore Giallo</a></h2>
+			</div>
+			<div id="menu">
+				<ul>
+					<li class="current_page_item"><a href="#">Homepage</a></li>
+					<li><a href="#">Services</a></li>
+					<li><a href="#">Portfolio</a></li>
+					<li><a href="#">About</a></li>
+					<li><a href="#">Contact</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id="banner">
+			<div class="content"><img src="~/Assets/images/img02.jpg" width="1000" height="400" alt="" /></div>
+		</div>
+	</div>
+	<!-- end #header -->
+    <div id="featured-content">        
+
+        <p>
+			<button type="button" id="btnCreateNew" data-toggle="modal" data-target="#CreateEditModal" class="btn btn-primary btn-md">
+				CREATE NEW FLOWERS
+			</button>
+		</p>
+
+        <div id="column1">
+            @RenderSection("Column1", required: false)
+            <!--<h2>Maecenas luctus</h2>
+        <p><img src="~/Assets/images/img06.jpg" width="300" height="150" alt="" /></p>
+        <p>Etiam non felis. Donec ut ante. In id eros. Suspendisse lacus turpis, cursus egestas at sem. Mauris quam enim, molestie.</p>
+        <p class="button"><a href="#">Read More</a></p>-->
+        </div>
+
+        <div id="column2">
+            @RenderSection("Column2", required: false)
+            <!--<h2>Fusce fringilla</h2>
+        <p><img src="~/Assets/images/img07.jpg" width="300" height="150" alt="" /></p>
+        <p>Etiam non felis. Donec ut ante. In id eros. Suspendisse lacus turpis, cursus egestas at sem. Mauris quam enim, molestie.</p>
+        <p class="button"><a href="#">Read More</a></p>-->
+        </div>
+
+        <div id="column3">
+            @RenderSection("Column3", required: false)
+            <!--<h2>Praesent mattis</h2>
+        <p><img src="~/Assets/images/img08.jpg" width="300" height="150" alt="" /></p>
+        <p>Etiam non felis. Donec ut ante. In id eros. Suspendisse lacus turpis, cursus egestas at sem. Mauris quam enim, molestie.</p>
+        <p class="button"><a href="#">Read More</a></p>-->
+        </div>
+    </div>
+	<div id="page">
+		<div id="content">
+			<div class="post">
+				<h2 class="title"><a href="#">Welcome to ColoreGiallo </a></h2>
+				<div class="entry">
+					<p>This is <strong>ColoreGiallo</strong>, a free, fully standards-compliant CSS template designed by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.   The photos in this template are from <a href="http://fotogrph.com/"> Fotogrph</a>. This free template is released under the <a href="http://templated.co/license">Creative Commons Attribution</a> license, so you're pretty much free to do whatever you want with it (even use it commercially) provided you give us credit for it. Have fun :) </p>
+					<p class="links"><a href="#" class="more">Read More</a><a href="#" title="b0x" class="comments">Comments</a></p>
+				</div>
+			</div>
+		</div>
+		<!-- end #content -->
+		<div id="sidebar">
+			<ul>
+				<li>
+					<h2>Categories</h2>
+					<ul>
+						<li><a href="#">Aliquam libero</a></li>
+						<li><a href="#">Consectetuer adipiscing elit</a></li>
+						<li><a href="#">Metus aliquam pellentesque</a></li>
+						<li><a href="#">Suspendisse iaculis mauris</a></li>
+						<li><a href="#">Urnanet non molestie semper</a></li>
+						<li><a href="#">Proin gravida orci porttitor</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<!-- end #sidebar -->
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	<!-- end #page --> 
+</div>
+<div id="footer-content-wrapper">
+	<div id="footer-content">
+		<div id="fbox1">
+			<h2>Fusce ultrices fringilla</h2>
+			<ul class="style1">
+				<li class="first"><a href="#">Maecenas luctus lectus at sapien</a></li>
+				<li><a href="#">Etiam rhoncus volutpat erat</a></li>
+				<li><a href="#">Etiam posuere augue sit amet nisl</a></li>
+				<li><a href="#">Mauris vulputate dolor sit amet nibh</a></li>
+				<li><a href="#">Etiam posuere augue sit amet nisl</a></li>
+			</ul>
+		</div>
+		<div id="fbox2">
+			<h2>Nulla luctus eleifend</h2>
+			<ul class="style1">
+				<li class="first"><a href="#">Maecenas luctus lectus at sapien</a></li>
+				<li><a href="#">Etiam rhoncus volutpat erat</a></li>
+				<li><a href="#">Etiam posuere augue sit amet nisl</a></li>
+				<li><a href="#">Mauris vulputate dolor sit amet nibh</a></li>
+				<li><a href="#">Etiam posuere augue sit amet nisl</a></li>
+			</ul>
+		</div>
+		<div id="fbox3">
+			<h2>Maecenas luctus lectus</h2>
+			<ul class="style1">
+				<li class="first"><a href="#">Maecenas luctus lectus at sapien</a></li>
+				<li><a href="#">Etiam rhoncus volutpat erat</a></li>
+				<li><a href="#">Etiam posuere augue sit amet nisl</a></li>
+				<li><a href="#">Mauris vulputate dolor sit amet nibh</a></li>
+				<li><a href="#">Etiam posuere augue sit amet nisl</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div id="footer">
+	<p>&copy; Untitled. All rights reserved. Images by <a href="http://fotogrph.com/">Fotogrph</a>. Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
+</div>
+<!-- end #footer -->
+
+<!-- end Shell -->
+@RenderSection("MODEL_DIALOG", required: false);
+
+</body>
+</html>
+
